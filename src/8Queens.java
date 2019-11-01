@@ -147,40 +147,41 @@ class Board{
 	
 	void printSolutions(){
 		
-			ArrayList<int[][]> ans = allSolutions.get(max-1);
-			Iterator<int[][]> it = ans.iterator();
+		ArrayList<int[][]> ans = allSolutions.get(max-1);
+		Iterator<int[][]> it = ans.iterator();
 			
-			while(it.hasNext()){
-				int[][] sol = it.next();
-				for(int i=0; i<rows; i++){
-					for(int j=0; j<columns; j++){
-						System.out.print(sol[i][j]);
-					}
-					System.out.println();
+		while(it.hasNext()){
+			int[][] sol = it.next();
+			for(int i=0; i<rows; i++){
+				for(int j=0; j<columns; j++){
+					System.out.print(sol[i][j]);
 				}
 				System.out.println();
 			}
-			System.out.println("Max numOfQueens=" + (max));
-			System.out.println("Number of Solutions: " + allSolutions.get(max-1).size());
+			System.out.println();
+		}
+		System.out.println("Max numOfQueens=" + (max));
+		System.out.println("Number of Solutions: " + allSolutions.get(max-1).size());
 	}
 	
+	//this prints a reflection of the board through the x-y axis. used for debugging
 	void printSolutionsOpp(){
 		
-			ArrayList<int[][]> ans = allSolutions.get(max-1);
-			Iterator<int[][]> it = ans.iterator();
+		ArrayList<int[][]> ans = allSolutions.get(max-1);
+		Iterator<int[][]> it = ans.iterator();
 			
-			while(it.hasNext()){
-				int[][] sol = it.next();
-				for(int i=0; i<columns; i++){
-					for(int j=0; j<rows; j++){
-						System.out.print(sol[j][i]);
-					}
-					System.out.println();
+		while(it.hasNext()){
+			int[][] sol = it.next();
+			for(int i=0; i<columns; i++){
+				for(int j=0; j<rows; j++){
+					System.out.print(sol[j][i]);
 				}
 				System.out.println();
 			}
-			System.out.println("Max numOfQueens=" + (max));
-			System.out.println("Number of Solutions: " + allSolutions.get(max-1).size());
+			System.out.println();
+		}
+		System.out.println("Max numOfQueens=" + (max));
+		System.out.println("Number of Solutions: " + allSolutions.get(max-1).size());
 	}
 	
 	boolean isSolution(){
