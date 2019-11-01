@@ -3,6 +3,9 @@ Given a r-by-c chess board, what is the maximum number of queens we can place on
 the board such that the queens cannot eat any piece in one move? What are all the different
 ways this maximum number of queens can be placed on the board?
 
+Note: a filled board where the top, bottom, or edge rows are empty are not considered as solutions, for this
+is a solution to a smaller board
+
 Write a program which states the maximum number of queens and shows all the different ways
 they can be placed
 */
@@ -117,6 +120,13 @@ class Board{
 		return true;
 	}
 	
+	boolean rowIsEmpty(int r){
+		for(int i=0; i<columns; i++){
+			if(b[r][i]==1) return false;
+		}
+		return true;
+	}
+	
 	boolean hasQueens(int r, int c){
 		//checks if there is another queen in same row
 		for(int i=c; i>=0; i--){
@@ -154,6 +164,25 @@ class Board{
 			System.out.println("Number of Solutions: " + allSolutions.get(max-1).size());
 	}
 	
+	void printSolutionsOpp(){
+		
+			ArrayList<int[][]> ans = allSolutions.get(max-1);
+			Iterator<int[][]> it = ans.iterator();
+			
+			while(it.hasNext()){
+				int[][] sol = it.next();
+				for(int i=0; i<columns; i++){
+					for(int j=0; j<rows; j++){
+						System.out.print(sol[j][i]);
+					}
+					System.out.println();
+				}
+				System.out.println();
+			}
+			System.out.println("Max numOfQueens=" + (max));
+			System.out.println("Number of Solutions: " + allSolutions.get(max-1).size());
+	}
+	
 	boolean isSolution(){
 		int lc = findLastColumn();
 		for(int i=lc+1; i<columns; i++){
@@ -164,7 +193,7 @@ class Board{
 			}
 		}
 		
-		if(colIsEmpty(0)) return false;
+		if(colIsEmpty(0) || colIsEmpty(columns-1) || rowIsEmpty(0) || rowIsEmpty(rows-1)) return false;
 		return true;
 		
 	}
@@ -175,6 +204,15 @@ class Board{
 				System.out.print(b[i][j]);
 			}
 			System.out.println();
+		}
+	}
+	
+	//for debugging
+	void printOpp(){
+		for(int i=0; i<columns; i++){
+			for(int j=0; j<rows; j++){
+				System.out.print(b[j][i]);
+			}
 		}
 	}
 	
