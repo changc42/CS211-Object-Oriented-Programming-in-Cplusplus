@@ -8,11 +8,13 @@ they can be placed
 */
 
 import java.util.*;
-import java.lang.Math;
+import java.lang.Math.*;
 
 class Board{
 	int[][] b;
-	int rows, columns, numOfQueens;
+	private int rows, columns;
+	int numOfQueens=0;
+	int max=1;
 	ArrayList<ArrayList<int[][]>> allSolutions;
 	
 	Board(int r, int c){
@@ -21,8 +23,8 @@ class Board{
 		b = new int[r][c];
 		allSolutions = new ArrayList<>();
 		
-		for(int i=0; i<min(r,c); i++){
-			allSolutions.add(new ArrayList<int[][]>())
+		for(int i=0; i<Math.min(r,c); i++){
+			allSolutions.add(new ArrayList<int[][]>());
 		}
 	}
 	
@@ -54,11 +56,11 @@ class Board{
 			}
 		}
 		if(!colIsEmpty(col)){
-			int key;
+			int key=0;
 			for(int i=0; i<rows; i++){
-				if(b[i][col]==1)
-					key = i;
+				if(b[i][col]==1) key = i;
 			}
+			
 			
 			b[key][col] = 0;
 			numOfQueens--;
@@ -78,7 +80,16 @@ class Board{
 		for(int i=lc; i<columns; i++){
 			nextSolForCol(i);
 		}
+		if(numOfQueens>max) max=numOfQueens;
 		
+		if(isSolution())
+		allSolutions.get(numOfQueens-1).add(clone());
+	}
+	
+	void findSolutions(){
+		while(!colIsEmpty(0)){
+			nextSol();
+		}
 	}
 
 	private int findLastColumn(){
@@ -117,11 +128,45 @@ class Board{
 			if(b[r-i][c-i]==1) return true;
 		}
 		
-		for(int i=1; c-i>=0 && r+i<=rows; i++){
+		for(int i=1; c-i>=0 && r+i<rows; i++){
 			if(b[r+i][c-i]==1) return true;
 		}
 		
 		return false;
+	}
+	
+	void printSolutions(){
+		
+			ArrayList<int[][]> ans = allSolutions.get(max-1);
+			Iterator<int[][]> it = ans.iterator();
+			
+			while(it.hasNext()){
+				int[][] sol = it.next();
+				for(int i=0; i<rows; i++){
+					for(int j=0; j<columns; j++){
+						System.out.print(sol[i][j]);
+					}
+					System.out.println();
+				}
+				System.out.println();
+			}
+			System.out.println("Max numOfQueens=" + (max));
+			System.out.println("Number of Solutions: " + allSolutions.get(max-1).size());
+	}
+	
+	boolean isSolution(){
+		int lc = findLastColumn();
+		for(int i=lc+1; i<columns; i++){
+			for(int j=0; j<rows; j++){
+				if(!hasQueens(j, i)){
+					return false;
+				}
+			}
+		}
+		
+		if(colIsEmpty(0)) return false;
+		return true;
+		
 	}
 	
 	void printBoard(){
@@ -133,8 +178,14 @@ class Board{
 		}
 	}
 	
-	void recordSolution(){
-		allSolutions.get(numOfQueens-1).add(b);
+	protected int[][] clone(){
+		int[][] ans = new int[rows][columns];
+		for(int i=0; i<rows; i++){
+			for(int j=0; j<columns; j++){
+				ans[i][j]=b[i][j];
+			}
+		}
+		return ans;
 	}
 	
 	
