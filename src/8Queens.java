@@ -18,6 +18,7 @@ class Board{
 	private int rows, columns;
 	int numOfQueens=0;
 	int max=1;
+	//allSolutions contains arraylists. each array list contains solutions with n number of queens
 	ArrayList<ArrayList<int[][]>> allSolutions;
 	
 	Board(int r, int c){
